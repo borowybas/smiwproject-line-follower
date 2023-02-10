@@ -36,8 +36,8 @@ void setup() {
 
   analogWriteRange(100);
   analogWriteFreq(100);
-  analogWrite(enableLeftMotor, 30);//enable
-  analogWrite(enableRightMotor, 30);
+  analogWrite(enableLeftMotor, 25);
+  analogWrite(enableRightMotor, 25);
 
 //move forward
   digitalWrite(input1LeftMotor, 1); 
@@ -82,7 +82,7 @@ void turnLeft90deg(){
 }
 
 void turnRight90deg(){
-    digitalWrite(input1LeftMotor, 1);
+  digitalWrite(input1LeftMotor, 1);
   digitalWrite(input2LeftMotor, 0);
   digitalWrite(input1RightMotor, 1);
   digitalWrite(input2RightMotor, 0);
@@ -94,32 +94,62 @@ void loop() {
     // delay(1000); 
 
 
-  if(digitalRead(leftLeftSensor) == 1 && digitalRead(rightRightSensor) == 1){
-    if(digitalRead(leftSensor) == 1 && digitalRead(rightSensor) == 1){
+ // if(digitalRead(leftLeftSensor) == 1 && digitalRead(rightRightSensor) == 1){
+    if(digitalRead(leftSensor) == 1 && digitalRead(rightSensor) == 1 && digitalRead(leftLeftSensor) == 1 && digitalRead(rightRightSensor) == 1){
       goForward();
     }
-    if(digitalRead(leftSensor) == 0 && digitalRead(rightSensor) == 1){
+    if(digitalRead(leftSensor) == 0 && digitalRead(rightSensor) == 1 && digitalRead(leftLeftSensor) == 1 && digitalRead(rightRightSensor) == 1){
       turnLeft();
     }
-    if(digitalRead(leftSensor) == 1 && digitalRead(rightSensor) == 0){
+    if(digitalRead(leftSensor) == 1 && digitalRead(rightSensor) == 0 && digitalRead(leftLeftSensor) == 1 && digitalRead(rightRightSensor) == 1){
       turnRight();
     }
-    if(digitalRead(leftSensor) == 0 && digitalRead(rightSensor) == 0){
+    if(digitalRead(leftSensor) == 0 && digitalRead(rightSensor) == 0 && digitalRead(leftLeftSensor) == 1 && digitalRead(rightRightSensor) == 1){
       stop();
     }
-  } else{//probably 90 degree turn
-    if(digitalRead(leftLeftSensor) == 0 && digitalRead(leftSensor) == 0){//90 degree left turn
-      while(digitalRead(leftLeftSensor) == 0){
+  //} else{
+
+    if(digitalRead(leftLeftSensor) == 1 && digitalRead(leftSensor) == 1 && digitalRead(rightSensor) == 1 && digitalRead(rightRightSensor) == 0){
+      turnRight();
+    } 
+    if(digitalRead(leftLeftSensor) == 1 && digitalRead(leftSensor) == 1 && digitalRead(rightSensor) == 0 && digitalRead(rightRightSensor) == 0){
+      while (digitalRead(rightRightSensor) == 0)
+      {
+        turnRight90deg();
+      }  
+    }
+    if(digitalRead(leftLeftSensor) == 1 && digitalRead(leftSensor) == 0 && digitalRead(rightSensor) == 0 && digitalRead(rightRightSensor) == 0){
+      turnRight();//
+    }
+    if(digitalRead(leftLeftSensor) == 0 && digitalRead(leftSensor) == 1 && digitalRead(rightSensor) == 1 && digitalRead(rightRightSensor) == 1){
+      turnLeft();
+    }
+    if(digitalRead(leftLeftSensor) == 0 && digitalRead(leftSensor) == 0 && digitalRead(rightSensor) == 1 && digitalRead(rightRightSensor) == 1){
+      while (digitalRead(leftLeftSensor) == 0)
+      {
         turnLeft90deg();
       }
     }
-    if(digitalRead(rightRightSensor) == 0 && digitalRead(rightSensor) == 0){//90 degree right turn
-      while(digitalRead(rightRightSensor) == 0){
-        turnRight90deg();
-      }
+    if(digitalRead(leftLeftSensor) == 0 && digitalRead(leftSensor) == 0 && digitalRead(rightSensor) == 0 && digitalRead(rightRightSensor) == 1){
+      turnLeft();//
     }
+    if(digitalRead(leftLeftSensor) == 0 && digitalRead(leftSensor) == 0 && digitalRead(rightSensor) == 0 && digitalRead(rightRightSensor) == 0){
+      goForward();
+    }
+      //goForward();
+    // if(digitalRead(leftLeftSensor) == 0 && digitalRead(leftSensor) == 0){//90 degree left turn
+    //   while(digitalRead(leftLeftSensor) == 0){
+    //     turnLeft90deg();
+    //   }
+    // }
+    // if(digitalRead(rightRightSensor) == 0 && digitalRead(rightSensor) == 0){//90 degree right turn
+    //   while(digitalRead(rightRightSensor) == 0){
+    //     turnRight90deg();
+    //   }
+    // }
+    
 
-  }
+  //}
 
 
 
